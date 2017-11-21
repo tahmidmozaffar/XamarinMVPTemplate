@@ -1,14 +1,15 @@
 ﻿using Android.App;
 using Android.Widget;
 using Android.OS;
-using XamarinMVPTemplate.Droid.Resources;
 using Android.Views;
 using XamarinMVPTemplate.Main.Presenters;
+using XamarinMVPTemplate.Main.Models;
+using XamarinMVPTemplate.Main.ViewInterfaces;
 
 namespace XamarinMVPTemplate.Droid
 {
     [Activity(Label = "xamarinmvptemplate", MainLauncher = true, Icon = "@mipmap/icon")]
-    public class MainActivity : Activity, View.IOnClickListener
+    public class MainActivity : Activity, View.IOnClickListener, IMainView
     {
         MainPresenter _MainPresenter;
 
@@ -17,9 +18,8 @@ namespace XamarinMVPTemplate.Droid
         protected override void OnCreate(Bundle savedInstanceState)
         {
             base.OnCreate(savedInstanceState);
-
-            // Set our view from the "main" layout resource
             SetContentView(Resource.Layout.Main);
+
 
             usernameEdtxt = FindViewById<EditText>(Resource.Id.usernameEdtxt);
             passwordEdtxt = FindViewById<EditText>(Resource.Id.passwordEdtxt);
@@ -33,8 +33,18 @@ namespace XamarinMVPTemplate.Droid
         {
             if (v.Id == Resource.Id.loginBtn)
             {
-                _MainPresenter.StartLogin(usernameEdtxt.Text, passwordEdtxt.Text);
+                _MainPresenter.StartLogin(new LoginCredential { UserName = usernameEdtxt.Text, Password = passwordEdtxt.Text });
             }
+        }
+
+        public void ShowErrorMessage(string msg)
+        {
+            System.Diagnostics.Debug.WriteLine(msg);
+        }
+
+        public void OnLoginSuccess()
+        {
+            //do something
         }
     }
 }

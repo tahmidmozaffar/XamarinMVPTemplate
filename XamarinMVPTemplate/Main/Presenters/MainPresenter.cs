@@ -1,4 +1,5 @@
 ﻿using System;
+using XamarinMVPTemplate.Main.Models;
 using XamarinMVPTemplate.Main.ViewInterfaces;
 
 namespace XamarinMVPTemplate.Main.Presenters
@@ -12,10 +13,23 @@ namespace XamarinMVPTemplate.Main.Presenters
             _View = view;
         }
 
-        public void StartLogin(string username, string password)
+
+        public void StartLogin(LoginCredential loginCredential)
         {
 
+            if (!loginCredential.IsValidUserName())
+            {
+                _View.ShowErrorMessage("Invalid username");
+                return;
+            }
 
+            if (!loginCredential.IsValidPassword())
+            {
+                _View.ShowErrorMessage("Invalid password");
+                return;
+            }
+
+            _View.OnLoginSuccess();
 
         }
     }

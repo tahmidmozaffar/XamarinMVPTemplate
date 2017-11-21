@@ -1,7 +1,9 @@
-﻿using System;
+using System;
 namespace XamarinMVPTemplate.Main.ViewInterfaces
 {
-    public interface IMainView
-    {
+	public interface IMainView
+	{
+		void ShowErrorMessage(string v);
+        void OnLoginSuccess();
     }
 }
